@@ -1,5 +1,6 @@
 package starter
 
+import "fmt"
 import "web"
 import "reflect"
 import "mustache"
@@ -48,6 +49,14 @@ func internalGet(context gon.WebContext, val string) {
     return
 }
 
+func getViewAndControllerFromURL(url string) (string, string){
+	pointerOfMappings := reflect.ValueOf(url)
+	valueOfMappings := reflect.Indirect(pointerOfMappings)
+	numField := valueOfMappings.NumField()
+	fmt.Println(numField)
+	return "", ""
+}
+
 func splitControllerAndAction(value string) (string,string) {
     controllerAndActionName := strings.Split(value,"/",2)
     controllerName := ""
@@ -62,6 +71,8 @@ func splitControllerAndAction(value string) (string,string) {
         controllerName = controllerAndActionName[0]
         actionName = "index"
     }
+
+	
 
     return controllerName, actionName
 }
