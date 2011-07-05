@@ -8,6 +8,7 @@ import C "app/controller"
 import "framework/mv"
 import "framework/gon"
 import "strings"
+import "app/conf/mapping"
 import "app/conf/bean"
 import "app/conf/bootstrap"
 
@@ -49,11 +50,12 @@ func internalGet(context gon.WebContext, val string) {
     return
 }
 
-func getViewAndControllerFromURL(url string) (string, string){
-	pointerOfMappings := reflect.ValueOf(url)
+func getViewAndControllerFromURL(value string) (string, string) {
+	pointerOfMappings := reflect.ValueOf(mapping.URL)
 	valueOfMappings := reflect.Indirect(pointerOfMappings)
-	numField := valueOfMappings.NumField()
-	fmt.Println(numField)
+	fmt.Println("Test",valueOfMappings.String())
+	// numField := valueOfMappings.NumField()
+	// fmt.Println(numField)
 	return "", ""
 }
 

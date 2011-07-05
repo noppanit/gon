@@ -5,16 +5,16 @@ type url_mappings struct{
 	wiredMapping map[string]string
 }
 
-var url = new(url_mappings)
+var URL = new(url_mappings)
 
 func init() {
 
-	url.defaultMapping = map[string]string{
+	URL.defaultMapping = map[string]string{
 	   	"url": "/",
 	    "controller": "hello",
 		"view": "index"}
-	url.wiredMapping = map[string]string{
-		"url": "/hello",
+	URL.wiredMapping = map[string]string{
+		"url": "/test",
 		"controller": "hello",
 		"view": "index"}
 	// "/", controller:"hello"

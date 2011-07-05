@@ -5,7 +5,7 @@ import "github.com/bmizerany/assert"
 import "reflect"
 
 func TestTest(test *testing.T){	
-	v := reflect.ValueOf(url)
+	v := reflect.ValueOf(URL)
 	f := reflect.Indirect(v);
 	maps := f.Field(0).Interface()
 	assert.Equal(test,maps.(map[string]string)["url"],"/")

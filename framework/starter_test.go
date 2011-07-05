@@ -49,3 +49,9 @@ func TestFindMethodAndInvoke(test *testing.T) {
     ret := f.Call([]reflect.Value{reflect.ValueOf(new(HelloController))})
     assert.Equal(test, ret[0].Interface().(Model), Model{"key":"value"})
 }
+
+func TestGetViewAndControllerFromURL(test *testing.T){
+	controllerName, viewName := getViewAndControllerFromURL("test");
+	assert.Equal(test, controllerName, "hello")
+	assert.Equal(test, viewName, "index")
+}
