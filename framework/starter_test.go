@@ -51,7 +51,7 @@ func TestFindMethodAndInvoke(test *testing.T) {
 }
 
 func TestGetViewAndControllerFromURL(test *testing.T){
-	controllerName, viewName := getViewAndControllerFromURL("test");
+	controllerName, viewName := getViewAndControllerFromURL("/test");
 	assert.Equal(test, controllerName, "hello")
 	assert.Equal(test, viewName, "index")
 }

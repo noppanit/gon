@@ -1,6 +1,5 @@
 package starter
 
-import "fmt"
 import "web"
 import "reflect"
 import "mustache"
@@ -50,19 +49,41 @@ func internalGet(context gon.WebContext, val string) {
     return
 }
 
-func getViewAndControllerFromURL(value string) (string, string) {
+func getViewAndControllerFromURL(url string) (string, string) {
 	pointerOfMappings := reflect.ValueOf(mapping.URL)
 	valueOfMappings := reflect.Indirect(pointerOfMappings)
-	fmt.Println("Test",valueOfMappings.String())
-	// numField := valueOfMappings.NumField()
-	// fmt.Println(numField)
-	return "", ""
+	numField := valueOfMappings.NumField()
+	var realMappings map[string]string
+	for i := 0; i < numField; i++ {
+		maps := valueOfMappings.Field(i).Interface()
+		realMaps := maps.(map[string]string)
+		if realMaps["url"] == url {
+			realMappings = realMaps
+		} else {
+			realMappings = nil
+		}
+	}
+	controllerName := ""
+	viewName := ""
+	
+	if realMappings != nil {
+		controllerName = realMappings["controller"]
+		viewName = realMappings["view"]
+	}
+	return controllerName, viewName 
 }
 
 func splitControllerAndAction(value string) (string,string) {
+	
     controllerAndActionName := strings.Split(value,"/",2)
     controllerName := ""
     actionName := ""
+
+	controllerName, actionName = getViewAndControllerFromURL("/"+value)
+	if controllerName != "" && actionName != ""{
+		return controllerName, actionName
+	}
+
 
     if len(controllerAndActionName) == 2 {
         controllerName,actionName = controllerAndActionName[0],controllerAndActionName[1]
@@ -73,8 +94,6 @@ func splitControllerAndAction(value string) (string,string) {
         controllerName = controllerAndActionName[0]
         actionName = "index"
     }
-
-	
 
     return controllerName, actionName
 }
